@@ -1,5 +1,4 @@
 
-
 vim.g.mapleader = " "
 
 local utils = require("utils")
