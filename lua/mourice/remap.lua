@@ -1,3 +1,6 @@
+local nvterminal = require("nvterm.terminal")
+
+
 vim.g.mapleader = " "
 --vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 
@@ -17,3 +20,9 @@ end)
 
 -- Nvimtree
 vim.keymap.set("n", "<leader>e", "<cmd> NvimTreeToggle <CR>")
+vim.keymap.set("n", "<leader>E", "<cmd> NvimTreeFocus <CR>")
+
+
+-- Terminal
+vim.keymap.set("n", "<C-Esc>", function() nvterminal.toggle("horizontal") end)
+vim.keymap.set("t", "<C-Esc>", function() nvterminal.toggle("horizontal") end)
