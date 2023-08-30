@@ -5,7 +5,11 @@ lsp.ensure_installed({
     'tsserver',
     'eslint',
     'rust_analyzer',
+    'jdtls'
 })
+
+lsp.setup_servers({ 'tsserver', "rust_analyzer" })
+lsp.skip_server_setup({ 'jdtls' })
 
 local cmp = require('cmp')
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
@@ -19,10 +23,7 @@ local cmp_mappings = lsp.defaults.cmp_mappings({
 cmp_mappings['<Tab>'] = nil
 cmp_mappings['<S-Tab>'] = nil
 
-lsp.setup_nvim_cmp({
-    mapping = cmp_mappings
-})
-
+lsp.setup_nvim_cmp({ mapping = cmp_mappings })
 lsp.set_preferences({
     suggest_lsp_servers = false,
     sign_icons = {
@@ -34,6 +35,4 @@ lsp.set_preferences({
 })
 lsp.setup()
 
-vim.diagnostic.config({
-    virtual_text = true
-})
+vim.diagnostic.config({ virtual_text = true })

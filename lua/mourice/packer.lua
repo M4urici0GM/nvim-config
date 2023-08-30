@@ -62,8 +62,14 @@ return require('packer').startup(function(use)
             require("nvterm").setup()
         end,
     }
+    use "lukas-reineke/indent-blankline.nvim"
     use {
-        'crispgm/nvim-tabline',
-        config = true
+        'nvim-lualine/lualine.nvim',
+        requires = { 'nvim-tree/nvim-web-devicons', opt = true }
     }
+    use 'nvim-tree/nvim-web-devicons' -- OPTIONAL: for file icons
+    use 'lewis6991/gitsigns.nvim'     -- OPTIONAL: for git status
+    use 'romgrk/barbar.nvim'
+    use { 'mfussenegger/nvim-jdtls', disable = false, }
+    use 'mfussenegger/nvim-dap'
 end)

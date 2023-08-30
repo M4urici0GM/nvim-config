@@ -36,3 +36,9 @@ vim.keymap.set("n", "<leader>cd", function() vim.diagnostic.open_float() end)
 vim.keymap.set("n", "<leader>cr", function() vim.lsp.buf.references() end)
 vim.keymap.set("n", "<leader>rn", function() vim.lsp.buf.rename() end)
 vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end)
+vim.keymap.set("n", "<leader>bx", ":BufferClose<CR>")
+vim.keymap.set("n", "<leader>tnm", "<Cmd>lua require('jdtls').test_nearest_method()<CR>")
+vim.keymap.set("n", "<leader>tc", "<Cmd>lua require'jdtls'.test_class()<CR>")
+vim.keymap.set("n", "<leader>dtt", "<Cmd>lua require('dapui').toggle()<CR>")
+
+
