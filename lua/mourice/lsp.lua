@@ -48,7 +48,9 @@ require('mason-lspconfig').setup({
         'lua_ls',
         'jdtls',
         'kotlin_language_server',
-        'omnisharp'
+        'omnisharp',
+        'html',
+        'svelte'
     }
 })
 
