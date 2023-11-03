@@ -22,4 +22,4 @@ vim.opt.updatetime = 50
 vim.opt.colorcolumn = "125"
 
 vim.g.mapleader = " "
-vim.cmd("colorscheme catppuccin-mocha")
+vim.cmd("colorscheme kanagawa")
