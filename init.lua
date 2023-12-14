@@ -17,11 +17,27 @@ require("lazy").setup({
     -- themes
     { "nvim-tree/nvim-web-devicons", lazy = true },
     { "catppuccin/nvim",             name = "catppuccin", priority = 1000 },
+    { 'rose-pine/neovim',            name = 'rose-pine' },
     'rebelot/kanagawa.nvim',
+    'Mofiqul/dracula.nvim',
+    { "EdenEast/nightfox.nvim" },
+    'm4xshen/autoclose.nvim',
 
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
+    "mfussenegger/nvim-jdtls",
+    {
+        "folke/trouble.nvim",
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+    },
+    {
+        'numToStr/Comment.nvim',
+        opts = {
+            -- add any options here
+        },
+        lazy = false,
+    },
 
     -- Cmp
     "hrsh7th/nvim-cmp",
@@ -29,7 +45,6 @@ require("lazy").setup({
     "L3MON4D3/LuaSnip",
     "hrsh7th/cmp-cmdline",
 
-    "lukas-reineke/indent-blankline.nvim",
     "nvim-lualine/lualine.nvim",
     "mfussenegger/nvim-dap",
     { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
@@ -49,7 +64,8 @@ require("lazy").setup({
         dependencies = { "nvim-lua/plenary.nvim" }
     },
     "simrat39/rust-tools.nvim",
-    "NvChad/nvterm"
+    "NvChad/nvterm",
+
 })
 
 require("mourice")

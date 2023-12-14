@@ -22,4 +22,6 @@ vim.opt.updatetime = 50
 vim.opt.colorcolumn = "125"
 
 vim.g.mapleader = " "
-vim.cmd("colorscheme kanagawa")
+
+vim.cmd("colorscheme carbonfox")
+
