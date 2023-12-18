@@ -15,6 +15,27 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.keymap.set("n", "<leader>tnm", "<Cmd>lua require('jdtls').test_nearest_method()<CR>")
         vim.keymap.set("n", "<leader>tc", "<Cmd>lua require'jdtls'.test_class()<CR>")
         vim.keymap.set("n", "<leader>dtt", "<Cmd>lua require('dapui').toggle()<CR>")
+
+
+        -- dapui
+        --
+        vim.keymap.set('n', "<leader>tb", function() require 'dap'.toggle_breakpoint() end)
+        vim.keymap.set('n', "<leader>tB", function() require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: ')) end)
+        vim.keymap.set('n', "<leader>bl", "<cmd>lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<cr>")
+        vim.keymap.set('n', '<leader>ctb', "<cmd>lua require'dap'.clear_breakpoints()<cr>")
+        vim.keymap.set('n', '<leader>stb', '<cmd>Telescope dap list_breakpoints<cr>')
+
+        vim.keymap.set('n', "<leader>dc", "<cmd>lua require'dap'.continue()<cr>")
+        vim.keymap.set('n', "<leader>dj", "<cmd>lua require'dap'.step_over()<cr>")
+        vim.keymap.set('n', "<leader>dJ", "<cmd>lua require'dap'.step_into()<cr>")
+        vim.keymap.set('n', "<leader>dK", "<cmd>lua require'dap'.step_out()<cr>")
+        vim.keymap.set('n', '<leader>dT', "<cmd>lua require'dap'.terminate()<cr>")
+        vim.keymap.set('n', "<leader>dr", "<cmd>lua require'dap'.repl.toggle()<cr>")
+        vim.keymap.set('n', "<leader>dl", "<cmd>lua require'dap'.run_last()<cr>")
+        vim.keymap.set('n', '<leader>di', function() require "dap.ui.widgets".hover() end)
+        vim.keymap.set('n', '<leader>df', '<cmd>Telescope dap frames<cr>')
+        vim.keymap.set('n', '<leader>dh', '<cmd>Telescope dap commands<cr>')
+        vim.keymap.set('n', '<leader>d?', function() local widgets = require "dap.ui.widgets"; widgets.centered_float(widgets.scopes) end)
     end
 })
 
@@ -63,10 +84,6 @@ lsp_defaults.capabilities = vim.tbl_deep_extend(
     lsp_defaults.capabilities,
     require('cmp_nvim_lsp').default_capabilities()
 )
-
-for _, server_name in ipairs(get_servers()) do
-    lspconfig[server_name].setup({})
-end
 
 
 lspconfig.omnisharp.setup({

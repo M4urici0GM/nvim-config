@@ -35,6 +35,9 @@ local on_attach = function(client, bufnr)
     nnoremap("<space>ec", jdtls.extract_constant, bufopts, "Extract constant")
     vim.keymap.set('v', "<space>em", [[<ESC><CMD>lua require('jdtls').extract_method(true)<CR>]],
         { noremap = true, silent = true, buffer = bufnr, desc = "Extract method" })
+
+
+    -- nvim-dap
 end
 
 
@@ -45,12 +48,22 @@ if vim.fn.has "mac" == 1 then
 end
 
 
+local bundles = {
+    vim.fn.glob('/Users/mourice/.local/share/java/com.microsoft.java.debug.plugin-*.jar', 1),
+}
+
+vim.list_extend(bundles, vim.split(vim.fn.glob('/Users/mourice/.local/share/java/vscode/*.jar', 1), "\n"))
+
+
 local config = {
     flags = {
         debounce_text_changes = 80,
     },
-    on_attach = on_attach,                                                                                    -- We pass our on_attach keybindings to the configuration map
-    root_dir = require("jdtls.setup").find_root { ".git", "mvnw", "gradlew", "pom.xml", "build.gradle" },     -- Set the root directory to our found root_marker
+    on_attach = on_attach, -- We pass our on_attach keybindings to the configuration map
+    init_options = {
+        bundles = bundles
+    },
+    root_dir = require("jdtls.setup").find_root { ".git", "mvnw", "gradlew", "pom.xml", "build.gradle" }, -- Set the root directory to our found root_marker
     -- Here you can configure eclipse.jdt.ls specific settings
     -- These are defined by the eclipse.jdt.ls project and will be passed to eclipse when starting.
     -- See https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
@@ -58,7 +71,7 @@ local config = {
     settings = {
         java = {
             signatureHelp = { enabled = true },
-            contentProvider = { preferred = 'fernflower' },     -- Use fernflower to decompile library code
+            contentProvider = { preferred = 'fernflower' }, -- Use fernflower to decompile library code
             -- Specify any completion options
             completion = {
                 favoriteStaticMembers = {
@@ -103,6 +116,10 @@ local config = {
             configuration = {
                 runtimes = {
                     {
+                        name = "JavaSE-21",
+                        path = home .. "/.sdkman/candidates/java/21.0.1-amzn",
+                    },
+                    {
                         name = "JavaSE-17",
                         path = home .. "/.sdkman/candidates/java/17.0.9-amzn",
                     },
@@ -130,11 +147,8 @@ local config = {
         '--add-modules=ALL-SYSTEM',
         '--add-opens', 'java.base/java.util=ALL-UNNAMED',
         '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
-        -- If you use lombok, download the lombok jar and place it in ~/.local/share/eclipse
         '-javaagent:' .. '/Users/mourice/.local/share/eclipse/lombok.jar',
 
-        -- The jar file is located where jdtls was installed. This will need to be updated
-        -- to the location where you installed jdtls
         '-jar',
         vim.fn.glob(home .. "/.local/share/nvim/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar"),
         '-configuration', home .. "/.local/share/nvim/mason/packages/jdtls/config_" .. os_config,

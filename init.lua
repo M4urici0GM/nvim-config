@@ -21,6 +21,7 @@ require("lazy").setup({
     'rebelot/kanagawa.nvim',
     'Mofiqul/dracula.nvim',
     { "EdenEast/nightfox.nvim" },
+    'sainnhe/sonokai',
     'm4xshen/autoclose.nvim',
 
     "williamboman/mason.nvim",
@@ -47,6 +48,7 @@ require("lazy").setup({
 
     "nvim-lualine/lualine.nvim",
     "mfussenegger/nvim-dap",
+    'rcarriga/nvim-dap-ui',
     { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
     {
         "romgrk/barbar.nvim",
