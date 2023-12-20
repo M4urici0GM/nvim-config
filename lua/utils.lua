@@ -88,7 +88,7 @@ end
 function M.setupLazy()
     local lazypath = M.formatPath("/lazy/lazy.nvim")
     if not M.folderExists(lazypath) then
-        vim.fn.system({ "git", "clone", "--filter=blob:none", lazy_repository, "--branch=stable" })
+        vim.fn.system({ "git", "clone", "--filter=blob:none", lazy_repository, "--branch=stable", lazypath })
     end
 
     vim.opt.rtp:prepend(lazypath)

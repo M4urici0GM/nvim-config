@@ -23,7 +23,29 @@ local servers = {
     tsserver = {},
     kotlin_language_server = { ignored = true },
     html = {},
-    svelte = {}
+    svelte = {},
+    cucumber_language_server = {
+        ignored = false,
+        setup = function(server, capabilities)
+            server.setup({
+                cmd = { "/Users/maubarbosa/.nvm/versions/node/v16.20.2/bin/cucumber-language-server", "--stdio" },
+                settings = {
+                    cucumber = {
+                        cucumber = {
+                            features = { "**/*.feature" },
+                            glue = { "**/*Step*.java" },
+                        }
+                    }
+                },
+                on_attach = function(client, bufnr)
+                    print("attached to cucumber file")
+                    vim.keymap.set('n', "<C-]>", vim.lsp.buf.definition, { buffer = 0 })
+                    vim.keymap.set('n', "gn", vim.diagnostic.goto_next, { buffer = 0 })
+                    vim.keymap.set('n', "gb", vim.diagnostic.goto_prev, { buffer = 0 })
+                end
+            })
+        end
+    }
 }
 
 lsp_config.setupLsp()

@@ -43,7 +43,6 @@ vim.keymap.set("n", '<leader>scf', "<cmd>Telescoep current_buffer_fuzzy_find<CR>
 vim.keymap.set("n", '<leader>f', "<cmd>Telescope find_files<CR>", { silent = true, noremap = true })
 vim.keymap.set("n", '<leader>F', "<cmd>Telescope live_grep<CR>", { silent = true, noremap = true })
 vim.keymap.set("n", '<leader>sbf', "<cmd>Telescope buffers<CR>", { silent = true, noremap = true })
-vim.keymap.set("n", '<leader>flc', "<cmd>Telescope lsp_code_actions<CR>", { silent = true, noremap = true })
 vim.keymap.set('n', '<leader>df', '<cmd>Telescope dap frames<cr>')
 vim.keymap.set('n', '<leader>dh', '<cmd>Telescope dap commands<cr>')
 vim.keymap.set('n', '<leader>stb', '<cmd>Telescope dap list_breakpoints<cr>')

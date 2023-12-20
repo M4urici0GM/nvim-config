@@ -8,7 +8,7 @@ local function get_server_names(servers)
     local keys = {}
     local n = 0
 
-    for name, _ in ipairs(servers) do
+    for name, _ in pairs(servers) do
         n = n + 1
         keys[n] = name
     end
@@ -31,6 +31,7 @@ end
 local function setupLspServers(masonLspConfig, servers)
     local cmp_capabilities = require('cmp_nvim_lsp').default_capabilities()
     local installed_servers = masonLspConfig.get_installed_servers()
+    get_server_names(installed_servers)
 
     lsp_defaults.capabilities = vim.tbl_deep_extend('force', lsp_defaults.capabilities, cmp_capabilities)
 

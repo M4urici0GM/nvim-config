@@ -135,7 +135,7 @@ local config = {
         '--add-modules=ALL-SYSTEM',
         '--add-opens', 'java.base/java.util=ALL-UNNAMED',
         '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
-        '-javaagent:' .. '/Users/mourice/.local/share/eclipse/lombok.jar',
+        '-javaagent:' .. home .. '/.local/share/nvim/mason/packages/jdtls/lombok.jar',
         '-jar', vim.fn.glob(home .. "/.local/share/nvim/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar"),
         '-configuration', home .. "/.local/share/nvim/mason/packages/jdtls/config_" .. utils.getOs(),
         '-data', workspace_dir,
