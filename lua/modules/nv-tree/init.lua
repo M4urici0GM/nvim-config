@@ -1,9 +1,10 @@
 local function on_attach(bufnr)
     local api = require("nvim-tree.api")
 
-    local function opts(desc)
+
+    local function opts(module, desc)
         return {
-            desc = "nvim-tree: " .. desc,
+            desc = module .. desc,
             buffer = bufnr,
             noremap = true,
             silent = true,
@@ -11,12 +12,13 @@ local function on_attach(bufnr)
         }
     end
 
-
     api.config.mappings.default_on_attach(bufnr)
 
-    vim.keymap.set('n', '<CR>', api.node.open.edit, opts('Open'))
-    vim.keymap.set('n', 'l', api.node.open.edit, opts('Open'))
-    vim.keymap.set('n', 'h', api.node.navigate.parent_close, opts('Close Directory'))
+
+    local api = require("nvim-tree.api")
+    vim.keymap.set('n', '<CR>', api.node.open.edit, opts('nvim-tree: ', 'Open'))
+    vim.keymap.set('n', 'l', api.node.open.edit, opts('nvim-tree: ', 'Open'))
+    vim.keymap.set('n', 'h', api.node.navigate.parent_close, opts('nvim-tree: ', 'Close Directory'))
 end
 
 require("nvim-tree").setup({

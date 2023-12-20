@@ -1,19 +1,17 @@
 local home = os.getenv('HOME')
 local jdtls = require('jdtls')
+local utils = require('utils')
 
 local workspace_path = home .. "/.local/share/lunarvim/jdtls-workspace/"
 local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
 local workspace_dir = workspace_path .. project_name
 
--- Helper function for creating keymaps
-function nnoremap(rhs, lhs, bufopts, desc)
-    bufopts.desc = desc
-    vim.keymap.set("n", rhs, lhs, bufopts)
-end
-
--- The on_attach function is used to set key maps after the language server
--- attaches to the current buffer
 local on_attach = function(client, bufnr)
+    local function nnoremap(rhs, lhs, bufopts, desc)
+        bufopts.desc = desc
+        vim.keymap.set("n", rhs, lhs, bufopts)
+    end
+
     -- Regular Neovim LSP client keymappings
     local bufopts = { noremap = true, silent = true, buffer = bufnr }
     nnoremap('gD', vim.lsp.buf.declaration, bufopts, "Go to declaration")
@@ -36,24 +34,18 @@ local on_attach = function(client, bufnr)
     vim.keymap.set('v', "<space>em", [[<ESC><CMD>lua require('jdtls').extract_method(true)<CR>]],
         { noremap = true, silent = true, buffer = bufnr, desc = "Extract method" })
 
-
     -- nvim-dap
 end
 
 
--- Determine OS
-local os_config = "linux"
-if vim.fn.has "mac" == 1 then
-    os_config = "mac"
-end
-
+local mourice_nvim_path = home .. '/.local/share/nvim/mourice.nvim'
+local java_test_plugins = vim.fn.glob(mourice_nvim_path .. '/java.test/*.jar', true)
 
 local bundles = {
-    vim.fn.glob('/Users/mourice/.local/share/java/com.microsoft.java.debug.plugin-*.jar', 1),
+    vim.fn.glob(mourice_nvim_path .. '/java.debug/com.microsoft.java.debug.plugin-*.jar', true),
 }
 
-vim.list_extend(bundles, vim.split(vim.fn.glob('/Users/mourice/.local/share/java/vscode/*.jar', 1), "\n"))
-
+vim.list_extend(bundles, vim.split(java_test_plugins, "\n"))
 
 local config = {
     flags = {
@@ -64,10 +56,6 @@ local config = {
         bundles = bundles
     },
     root_dir = require("jdtls.setup").find_root { ".git", "mvnw", "gradlew", "pom.xml", "build.gradle" }, -- Set the root directory to our found root_marker
-    -- Here you can configure eclipse.jdt.ls specific settings
-    -- These are defined by the eclipse.jdt.ls project and will be passed to eclipse when starting.
-    -- See https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
-    -- for a list of options
     settings = {
         java = {
             signatureHelp = { enabled = true },
@@ -148,24 +136,18 @@ local config = {
         '--add-opens', 'java.base/java.util=ALL-UNNAMED',
         '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
         '-javaagent:' .. '/Users/mourice/.local/share/eclipse/lombok.jar',
-
-        '-jar',
-        vim.fn.glob(home .. "/.local/share/nvim/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar"),
-        '-configuration', home .. "/.local/share/nvim/mason/packages/jdtls/config_" .. os_config,
-
-        -- Use the workspace_folder defined above to store data for this project
+        '-jar', vim.fn.glob(home .. "/.local/share/nvim/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar"),
+        '-configuration', home .. "/.local/share/nvim/mason/packages/jdtls/config_" .. utils.getOs(),
         '-data', workspace_dir,
     },
 }
 
 config["on_attach"] = function(client, bufnr)
     local _, _ = pcall(vim.lsp.codelens.refresh)
-    require("jdtls").setup_dap({ hotcodereplace = "auto" })
+    require("jdtls").setup_dap({ hotcodereplace = "auto", config_overrides = {} })
+    require("jdtls.dap").setup_dap_main_class_configs()
+
     require("lvim.lsp").on_attach(client, bufnr)
-    local status_ok, jdtls_dap = pcall(require, "jdtls.dap")
-    if status_ok then
-        jdtls_dap.setup_dap_main_class_configs()
-    end
 end
 
 vim.api.nvim_create_autocmd({ "BufEnter" }, {
@@ -176,7 +158,6 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
     end,
 })
 
-
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {
     pattern = { "*.java" },
     callback = function()
@@ -184,6 +165,4 @@ vim.api.nvim_create_autocmd({ "BufWritePost" }, {
     end,
 })
 
--- Finally, start jdtls. This will run the language server using the configuration we specified,
--- setup the keymappings, and attach the LSP client to the current buffer
 jdtls.start_or_attach(config)

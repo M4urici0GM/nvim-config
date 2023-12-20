@@ -1,4 +1,6 @@
-require 'nvim-treesitter.configs'.setup {
+require 'nvim-treesitter.configs'.setup({
+    ignore_install = {},
+    modules = {},
     ensure_installed = {
         "java",
         "c",
@@ -16,4 +18,4 @@ require 'nvim-treesitter.configs'.setup {
         enable = true,
         additional_vim_regex_highlighting = false,
     },
-}
+})
