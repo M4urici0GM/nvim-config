@@ -1,3 +1,7 @@
+package.path = package.path .. ';~/.config/nvim/lua'
+local utils = require('utils')
+
+
 local function opts(module, desc)
     return {
         desc = module .. desc,
@@ -8,10 +12,14 @@ local function opts(module, desc)
     }
 end
 
+-- Utility
+vim.keymap.set("n", "<Esc>", utils.closeAllPopups)
 
-vim.keymap.set("n", "Q", "<nop>")
+-- Vimrc
+vim.keymap.set("n", "<leader>.", ":e ~/.config/nvim/init.lua<cr>", opts("builtin", "open editor config"))
+vim.keymap.set("n", "<leader>,", ":so ~/.config/nvim/init.lua<cr>", opts("builtin", "reload editor configs"))
 
--- Slip
+-- Split
 vim.keymap.set("n", "<leader>tt", ":sp<CR>", opts("builtin", "split buffer horizontally"))
 vim.keymap.set("n", "<leader>tT", ":vsp<CR>", opts("builtin", "split buffer vertically"))
 
@@ -32,20 +40,41 @@ vim.keymap.set("n", "<leader>e", "<cmd> NvimTreeToggle <CR>")
 vim.keymap.set("n", "<leader>E", "<cmd> NvimTreeFocus <CR>")
 
 -- Buffer move
-vim.keymap.set("n", "<A-x>", ":BufferClose<CR>")
-vim.keymap.set("n", "<A-l>", ":BufferNext<CR>")
-vim.keymap.set("n", "<A-h>", ":BufferPrevious<CR>")
-vim.keymap.set("n", "<A-L>", ":BufferMoveNext<CR>")
-vim.keymap.set("n", "<A-H>", ":BufferMovePrevious<CR>")
+vim.keymap.set("n", "<A-c>", ":BufferClose<CR>", { silent = true, noremap = true })
+vim.keymap.set("n", "<A-j>", ":BufferNext<CR>", { silent = true, noremap = true })
+vim.keymap.set("n", "<A-k>", ":BufferPrevious<CR>", { silent = true, noremap = true })
+vim.keymap.set("n", "<A-p>", ":BufferPin<CR>", { silent = true, noremap = true })
+vim.keymap.set("n", "<A-N>", ":BufferMoveNext<CR>", { silent = true, noremap = true })
+vim.keymap.set("n", "<A-P>", ":BufferMovePrevious<CR>", { silent = true, noremap = true })
 
 -- Telescope
+
+local function get_cwd()
+    local cwd = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
+    if vim.v.shell_error ~= 0 then
+        return vim.lsp.get_active_clients()[1].config.root_dir
+    end
+
+    return cwd
+end
+
+
 vim.keymap.set("n", '<leader>scf', "<cmd>Telescoep current_buffer_fuzzy_find<CR>", { silent = true, noremap = true })
-vim.keymap.set("n", '<leader>f', "<cmd>Telescope find_files<CR>", { silent = true, noremap = true })
-vim.keymap.set("n", '<leader>F', "<cmd>Telescope live_grep<CR>", { silent = true, noremap = true })
 vim.keymap.set("n", '<leader>sbf', "<cmd>Telescope buffers<CR>", { silent = true, noremap = true })
 vim.keymap.set('n', '<leader>df', '<cmd>Telescope dap frames<cr>')
 vim.keymap.set('n', '<leader>dh', '<cmd>Telescope dap commands<cr>')
 vim.keymap.set('n', '<leader>stb', '<cmd>Telescope dap list_breakpoints<cr>')
+vim.keymap.set(
+    "n",
+    '<leader>F',
+    function() require("telescope.builtin").live_grep({ cwd = get_cwd() }) end,
+    { silent = true, noremap = true })
+
+vim.keymap.set(
+    "n",
+    '<leader>f',
+    function() require("telescope.builtin").find_files({ cwd = get_cwd() }) end,
+    { silent = true, noremap = true })
 
 -- Yank to clipboard
 vim.keymap.set("n", "<leader>y", "\"*y", { silent = true })
@@ -57,9 +86,10 @@ vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover() <cr>")
 vim.keymap.set("n", "<leader>vws", "<cmd>lua vim.lsp.buf.workspace_symbol() <cr>")
 vim.keymap.set("n", "[d", "<cmd>lua vim.diagnostic.goto_next() <cr>")
 vim.keymap.set("n", "]d", "<cmd>lua vim.diagnostic.goto_prev() <cr>")
-vim.keymap.set("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action() <cr>")
-vim.keymap.set("n", "<leader>cd", "<cmd>lua vim.diagnostic.open_float() <cr>")
-vim.keymap.set("n", "<leader>cr", "<cmd>lua vim.lsp.buf.references() <cr>")
+vim.keymap.set("n", "<leader>sca", "<cmd>lua vim.lsp.buf.code_action() <cr>", { silent = true, noremap = true })
+vim.keymap.set("n", "<leader>scd", "<cmd>lua vim.diagnostic.open_float() <cr>", { silent = true, noremap = true })
+vim.keymap.set("n", "<leader>scr", "<cmd>lua vim.lsp.buf.references() <cr>", { silent = true, noremap = true })
+vim.keymap.set("n", "<leader>sci", "<cmd>lua vim.lsp.buf.implementation() <cr>", { silent = true, noremap = true })
 vim.keymap.set("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename() <cr>")
 vim.keymap.set("i", "<C-h>", "<cmd>lua vim.lsp.buf.signature_help() <cr>")
 vim.keymap.set("n", "<leader>tnm", "<Cmd>lua require('jdtls').test_nearest_method()<CR>")

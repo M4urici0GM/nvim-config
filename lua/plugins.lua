@@ -42,5 +42,4 @@ local pluginConfigs = {
     "NvChad/nvterm",
 }
 
-
 require("lazy").setup(pluginConfigs)

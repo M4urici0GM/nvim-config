@@ -3,7 +3,6 @@ local lsp_defaults = lspconfig.util.default_config
 
 local M = {}
 
-
 local function get_server_names(servers)
     local keys = {}
     local n = 0
@@ -17,17 +16,6 @@ local function get_server_names(servers)
 end
 
 
-local function is_installed(server_name, servers)
-    for _, name in ipairs(servers) do
-        if name == server_name then
-            return true
-        end
-    end
-
-    return false
-end
-
-
 local function setupLspServers(masonLspConfig, servers)
     local cmp_capabilities = require('cmp_nvim_lsp').default_capabilities()
     local installed_servers = masonLspConfig.get_installed_servers()
@@ -37,10 +25,6 @@ local function setupLspServers(masonLspConfig, servers)
 
     local capabilities = lsp_defaults.capabilities
     for name, value in pairs(servers) do
-        if is_installed(name, installed_servers) == false then
-            error("server " .. name .. " not installed.")
-        end
-
         if value.ignored == nil or value.ignored == false then
             if value.setup ~= nil then
                 value.setup(lspconfig[name], capabilities)
@@ -60,7 +44,7 @@ function M.setup(servers)
 
     vscodeLuaSnip.lazy_load()
     mason.setup()
-    masonLspConfig.setup({ ensure_installed = server_names })
+    masonLspConfig.setup({ ensure_installed = server_names, automatic_installation = true })
 
     setupLspServers(masonLspConfig, servers)
 end

@@ -24,6 +24,14 @@ local vscode_java_test_repository = 'https://github.com/microsoft/vscode-java-te
 local plugin_file =
 '/mourice.nvim/java.debug/tmp/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar'
 
+function M.closeAllPopups()
+    for _, win in pairs(vim.api.nvim_list_wins()) do
+        if vim.api.nvim_win_get_config(win).relative == 'win' then
+            vim.api.nvim_win_close(win, false)
+        end
+    end
+end
+
 function M.setupEnvironment()
     M.evaluateCommand("mvn", "maven is not installed. trying to install with brew")
     M.evaluateCommand("npm", "npm is not installed, please install node and try again.")
