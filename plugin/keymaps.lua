@@ -17,9 +17,6 @@ vim.keymap.set("n", "<Esc>", utils.closeAllPopups)
 vim.keymap.set("n", "Q", "<nop>")
 vim.keymap.set("n", "q", "<nop>")
 
-
-
-
 -- Vimrc
 vim.keymap.set("n", "<leader>.", ":e ~/.config/nvim/init.lua<cr>", opts("builtin", "open editor config"))
 vim.keymap.set("n", "<leader>,", ":so ~/.config/nvim/init.lua<cr>", opts("builtin", "reload editor configs"))
@@ -41,7 +38,7 @@ vim.keymap.set("n", "<leader>c", "\"_c", { silent = true, noremap = true }) -- C
 vim.keymap.set("v", "<leader>c", "\"_c", { silent = true, noremap = true }) -- Change without losing buffer
 
 -- Nvimtree
-vim.keymap.set("n", "<leader>e", "<cmd> NvimTreeToggle <CR>")
+vim.keymap.set("n", "<leader>e", function() require("nvim-tree.api").tree.toggle({ focus = true, find_file = true, current_window = false }) end)
 vim.keymap.set("n", "<leader>E", "<cmd> NvimTreeFocus <CR>")
 
 -- Buffer move
@@ -78,7 +75,7 @@ vim.keymap.set(
 vim.keymap.set(
     "n",
     '<leader>f',
-    function() require("telescope.builtin").find_files({ cwd = get_cwd() }) end,
+    function() require("telescope.builtin").find_files({ cwd = get_cwd(), no_ignore_parent  = true }) end,
     { silent = true, noremap = true })
 
 -- Yank to clipboard

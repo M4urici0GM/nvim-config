@@ -8,5 +8,4 @@ end
 vim.keymap.set("n", "<C-T>", toggle_horizontal)
 vim.keymap.set("t", "<C-T>", toggle_horizontal)
 
-nvterm.setup({ })
-
+nvterm.setup({})

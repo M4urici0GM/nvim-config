@@ -40,6 +40,8 @@ end
 
 local mourice_nvim_path = home .. '/.local/share/nvim/mourice.nvim'
 local java_test_plugins = vim.fn.glob(mourice_nvim_path .. '/java.test/*.jar', true)
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 local bundles = {
     vim.fn.glob(mourice_nvim_path .. '/java.debug/com.microsoft.java.debug.plugin-*.jar', true),
@@ -48,13 +50,10 @@ local bundles = {
 vim.list_extend(bundles, vim.split(java_test_plugins, "\n"))
 
 local config = {
-    flags = {
-        debounce_text_changes = 80,
-    },
-    on_attach = on_attach, -- We pass our on_attach keybindings to the configuration map
-    init_options = {
-        bundles = bundles
-    },
+    flags = { debounce_text_changes = 80, },
+    on_attach = on_attach,                                                                                -- We pass our on_attach keybindings to the configuration map
+    capabilities = capabilities,
+    init_options = { bundles = bundles },
     root_dir = require("jdtls.setup").find_root { ".git", "mvnw", "gradlew", "pom.xml", "build.gradle" }, -- Set the root directory to our found root_marker
     settings = {
         java = {

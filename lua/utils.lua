@@ -30,6 +30,15 @@ function M.closeAllPopups()
             vim.api.nvim_win_close(win, false)
         end
     end
+
+    -- local curbufnr = vim.api.nvim_get_current_buf()
+    -- if vim.bo[curbufnr].filetype == "NvimTree" then
+    --     require("nvim-tree.api").tree.close()
+    -- end
+
+    if require("nvim-tree.view").is_visible() then
+        require("nvim-tree.api").tree.close()
+    end
 end
 
 function M.setupEnvironment()

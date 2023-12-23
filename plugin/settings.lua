@@ -24,9 +24,12 @@ vim.opt.isfname:append("@-@")
 vim.opt.updatetime = 50
 vim.opt.colorcolumn = "125"
 vim.g.barbar_auto_setup = false
-
-
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+vim.opt.foldmethod = "manual"
 
 vim.cmd('autocmd BufEnter * set formatoptions-=cro')
 vim.cmd('autocmd BufEnter * setlocal formatoptions-=cro')
+vim.cmd('command Z w | qa!')
+vim.cmd('cabbrev wqa Z')
 
