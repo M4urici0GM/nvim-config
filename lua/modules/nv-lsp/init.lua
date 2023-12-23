@@ -56,11 +56,6 @@ local function is_telescope_prompt(bufnr)
     return filetype == 'TelescopePrompt'
 end
 
-local function is_terminal(bufnr)
-    local filetype = vim.api.nvim_buf_get_option(bufnr, 'filetype')
-    return filetype == 'terminal'
-end
-
 local function is_dapui_buf(bufnr)
     local filetype = vim.api.nvim_buf_get_option(bufnr, 'filetype')
     if filetype == nil or filetype == '' then

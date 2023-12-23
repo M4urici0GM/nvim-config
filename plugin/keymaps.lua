@@ -38,7 +38,8 @@ vim.keymap.set("n", "<leader>c", "\"_c", { silent = true, noremap = true }) -- C
 vim.keymap.set("v", "<leader>c", "\"_c", { silent = true, noremap = true }) -- Change without losing buffer
 
 -- Nvimtree
-vim.keymap.set("n", "<leader>e", function() require("nvim-tree.api").tree.toggle({ focus = true, find_file = true, current_window = false }) end)
+vim.keymap.set("n", "<leader>e",
+    function() require("nvim-tree.api").tree.toggle({ focus = true, find_file = true, current_window = false }) end)
 vim.keymap.set("n", "<leader>E", "<cmd> NvimTreeFocus <CR>")
 
 -- Buffer move
@@ -75,7 +76,7 @@ vim.keymap.set(
 vim.keymap.set(
     "n",
     '<leader>f',
-    function() require("telescope.builtin").find_files({ cwd = get_cwd(), no_ignore_parent  = true }) end,
+    function() require("telescope.builtin").find_files({ cwd = get_cwd(), no_ignore_parent = true }) end,
     { silent = true, noremap = true })
 
 -- Yank to clipboard
@@ -83,6 +84,9 @@ vim.keymap.set("n", "<leader>y", "\"*y", { silent = true })
 
 -- Lsp
 vim.keymap.set("n", "\\r", "<cmd>lua vim.lsp.buf.format() <cr>")
+vim.keymap.set("v", "<Tab>", ": ><CR>gv")
+vim.keymap.set("v", "<S-Tab>", ": <<CR>gv")
+vim.keymap.set("v", "\\r", "<cmd>lua vim.lsp.buf.format() <cr>")
 vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition() <cr>")
 vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover() <cr>")
 vim.keymap.set("n", "<leader>vws", "<cmd>lua vim.lsp.buf.workspace_symbol() <cr>")
