@@ -1,4 +1,3 @@
-
 local cmp = require 'cmp'
 cmp.setup({
     snippet = {
@@ -8,9 +7,11 @@ cmp.setup({
         end,
     },
     window = {
-        documentation = cmp.config.window.bordered()
+        documentation = cmp.config.window.bordered(),
+        completion = cmp.config.window.bordered(),
     },
     formatting = {
+        expandable_indicator = true,
         fields = { 'menu', 'abbr', 'kind' },
         format = function(entry, item)
             local menu_icon = {
@@ -27,10 +28,12 @@ cmp.setup({
     mapping = cmp.mapping.preset.insert({
         ['<C-b>'] = cmp.mapping.scroll_docs(-4),
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
-        ['<C-F>'] = cmp.mapping.complete(),
+        ['<C-Space>'] = cmp.mapping.complete(),
         ['<C-e>'] = cmp.mapping.abort(),
         ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
     }),
+
+
     sources = cmp.config.sources({
         { name = 'nvim_lsp' },
         { name = 'luasnip' }, -- For luasnip users.
@@ -57,6 +60,3 @@ cmp.setup.cmdline(':', {
         { name = 'cmdline' }
     })
 })
-
-
-

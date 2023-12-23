@@ -1,4 +1,5 @@
 local lazy = require("lazy");
+
 local pluginConfigs = {
     -- Utils
     "nvim-tree/nvim-tree.lua",

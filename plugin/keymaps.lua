@@ -14,6 +14,11 @@ end
 
 -- Utility
 vim.keymap.set("n", "<Esc>", utils.closeAllPopups)
+vim.keymap.set("n", "Q", "<nop>")
+vim.keymap.set("n", "q", "<nop>")
+
+
+
 
 -- Vimrc
 vim.keymap.set("n", "<leader>.", ":e ~/.config/nvim/init.lua<cr>", opts("builtin", "open editor config"))

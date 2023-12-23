@@ -50,4 +50,3 @@ local servers = {
 
 lsp_config.setupLsp()
 mason_lspconfig.setup(servers)
-
