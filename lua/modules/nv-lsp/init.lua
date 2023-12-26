@@ -56,6 +56,12 @@ local function is_telescope_prompt(bufnr)
     return filetype == 'TelescopePrompt'
 end
 
+
+local function is_buf_terminal(bufnr)
+    local filetype = vim.api.nvim_buf_get_option(bufnr, 'filetype')
+    return filetype == 'terminal'
+end
+
 local function is_dapui_buf(bufnr)
     local filetype = vim.api.nvim_buf_get_option(bufnr, 'filetype')
     if filetype == nil or filetype == '' then
@@ -108,13 +114,14 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
     pattern = { "*" },
     group = id,
     callback = function()
-        local buflist  = vim.api.nvim_list_bufs()
-        local curbufnr = vim.api.nvim_get_current_buf()
+        local buflist      = vim.api.nvim_list_bufs()
+        local curbufnr     = vim.api.nvim_get_current_buf()
 
-        local is_dapui = is_dapui_buf(curbufnr)
+        local is_dapui     = is_dapui_buf(curbufnr)
         local is_debugging = is_debugging_session_active()
+        local is_terminal  = is_buf_terminal(curbufnr)
 
-        if is_dapui or is_debugging then
+        if is_dapui or is_debugging or is_terminal then
             return
         end
 
@@ -123,7 +130,7 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
             local file         = vim.fn.bufname(bufnr)
             local cwd          = vim.fn.fnamemodify(vim.fn.getcwd(), "p:h:t")
             local is_telescope = is_telescope_prompt(bufnr)
-            local is_child     = vim.fn.match(file, cwd) == 0 and vim.bo[bufnr].buflisted
+            local is_child     = vim.fn.match(file, cwd) == 0
 
             if not is_dapui and not is_telescope and vim.bo[bufnr].buflisted then
                 if not is_changed and not is_child and bufnr ~= curbufnr then

@@ -3,10 +3,13 @@ local lazy = require("lazy");
 local pluginConfigs = {
     -- Utils
     "nvim-tree/nvim-tree.lua",
-    'm4xshen/autoclose.nvim',
     { "folke/neodev.nvim",                    opts = {} },
     { 'gbrlsnchs/telescope-lsp-handlers.nvim' },
     'nvim-telescope/telescope-ui-select.nvim',
+    {
+        'windwp/nvim-autopairs',
+        event = "InsertEnter",
+    },
 
     -- themes
     { "nvim-tree/nvim-web-devicons", lazy = true },
