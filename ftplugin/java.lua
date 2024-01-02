@@ -57,25 +57,38 @@ local config = {
     root_dir = require("jdtls.setup").find_root { ".git", "mvnw", "gradlew", "pom.xml", "build.gradle" }, -- Set the root directory to our found root_marker
     settings = {
         java = {
-            signatureHelp = { enabled = true },
             contentProvider = { preferred = 'fernflower' }, -- Use fernflower to decompile library code
-            -- Specify any completion options
+            autoBuild = { enabled = true },
+            signatureHelp = {
+                enabled = true,
+                description = { enabled = true }
+            },
+            favoriteStaticMembers = {
+                "org.junit.jupiter.api.DynamicTest.*",
+                "org.junit.jupiter.api.Assertions.*",
+                "org.junit.jupiter.api.Assumptions.*",
+                "org.junit.jupiter.api.DynamicContainer.*",
+                "org.junit.Assert.*",
+                "org.junit.Assume.*",
+                "java.util.Objects.*",
+                "org.mockito.ArgumentMatchers.*",
+                "org.mockito.Mockito.*",
+                "org.mockito.Answers.*",
+            },
+            filteredTypes = {
+                "com.sun.*",
+                "io.micrometer.shaded.*",
+                "java.awt.*",
+                "jdk.*",
+                "sun.*",
+            },
             completion = {
-                favoriteStaticMembers = {
-                    "org.hamcrest.MatcherAssert.assertThat",
-                    "org.hamcrest.Matchers.*",
-                    "org.hamcrest.CoreMatchers.*",
-                    "org.junit.jupiter.api.Assertions.*",
-                    "java.util.Objects.requireNonNull",
-                    "java.util.Objects.requireNonNullElse",
-                    "org.mockito.Mockito.*"
-                },
-                filteredTypes = {
-                    "com.sun.*",
-                    "io.micrometer.shaded.*",
-                    "java.awt.*",
-                    "jdk.*", "sun.*",
-                },
+                importOrder = {
+                    "javax",
+                    "java",
+                    "com",
+                    "org"
+                }
             },
             -- Specify any options for organizing imports
             sources = {
@@ -84,22 +97,28 @@ local config = {
                     staticStarThreshold = 9999,
                 },
             },
+            eclipse = {
+                downloadSources = true
+            },
+            maven = {
+                downloadSources = true,
+                updateSnapshots = true
+            },
             -- How code generation should act
             codeGeneration = {
-                toString = {
-                    template =
-                    "${object.className}{${member.name()}=${member.value}, ${otherMembers}}"
-                },
-                hashCodeEquals = {
-                    useJava7Objects = true,
+                tostring = {
+                    skipNullValues = true,
+                    listArrayContents = true,
+                    template = "${object.className}{${member.name()}=${member.value}, ${otherMembers}}",
                 },
                 useBlocks = true,
+                hashCodeEquals = {
+                    useInstanceof = true,
+                    useJava7Objects = true
+                },
+                generateComments = false,
+                insertLocation = true
             },
-            -- If you are developing in projects with different Java versions, you need
-            -- to tell eclipse.jdt.ls to use the location of the JDK for your Java version
-            -- See https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
-            -- And search for `interface RuntimeOption`
-            -- The `name` is NOT arbitrary, but must match one of the elements from `enum ExecutionEnvironment` in the link above
             configuration = {
                 runtimes = {
                     {
@@ -118,11 +137,6 @@ local config = {
             }
         }
     },
-    -- cmd is the command that starts the language server. Whatever is placed
-    -- here is what is passed to the command line to execute jdtls.
-    -- Note that eclipse.jdt.ls must be started with a Java version of 17 or higher
-    -- See: https://github.com/eclipse/eclipse.jdt.ls#running-from-the-command-line
-    -- for the full list of options
     cmd = {
         'java',
         '-Declipse.application=org.eclipse.jdt.ls.core.id1',

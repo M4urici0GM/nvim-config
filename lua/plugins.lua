@@ -1,5 +1,3 @@
-local lazy = require("lazy");
-
 local pluginConfigs = {
     -- Utils
     "nvim-tree/nvim-tree.lua",
@@ -30,6 +28,13 @@ local pluginConfigs = {
     "mfussenegger/nvim-dap",
     'rcarriga/nvim-dap-ui',
     "simrat39/rust-tools.nvim",
+    { 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' },
+    'theHamsta/nvim-dap-virtual-text',
+    {
+        'akinsho/flutter-tools.nvim',
+        lazy = true,
+        config = false,
+    },
 
     -- Cmp
     "hrsh7th/nvim-cmp",
@@ -37,11 +42,12 @@ local pluginConfigs = {
     "L3MON4D3/LuaSnip",
     "hrsh7th/cmp-cmdline",
 
+    -- UI
     "nvim-lualine/lualine.nvim",
+    { "romgrk/barbar.nvim",                       opts = {},                                                                                                                             version = "^1.0.0" },
     "lewis6991/gitsigns.nvim",     -- OPTIONAL: for git status
     "nvim-tree/nvim-web-devicons", -- OPTIONAL: for file icons
     { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
-    { "romgrk/barbar.nvim",              opts = {},          version = "^1.0.0" },
     { "nvim-telescope/telescope.nvim",   tag = "0.1.2",      dependencies = { "nvim-lua/plenary.nvim" } },
     "NvChad/nvterm",
 }

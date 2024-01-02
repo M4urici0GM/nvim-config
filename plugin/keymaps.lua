@@ -1,11 +1,10 @@
 package.path = package.path .. ';~/.config/nvim/lua'
 local utils = require('utils')
 
-
 local function opts(module, desc)
     return {
         desc = module .. desc,
-        buffer = bufnr,
+        buffer = vim.api.nvim_get_current_buf(),
         noremap = true,
         silent = true,
         nowait = true
@@ -39,45 +38,33 @@ vim.keymap.set("v", "<leader>c", "\"_c", { silent = true, noremap = true }) -- C
 
 -- Nvimtree
 vim.keymap.set("n", "<leader>e",
-    function() require("nvim-tree.api").tree.toggle({ focus = true, find_file = true, current_window = false }) end)
-vim.keymap.set("n", "<leader>E", "<cmd> NvimTreeFocus <CR>")
+    function()
+        local tree_view = require("nvim-tree.view")
+        local tree_api = require("nvim-tree.api").tree
+        if tree_view.is_visible() then
+            tree_api.focus()
+            return
+        end
+
+
+
+        tree_api.toggle({ focus = true, find_file = true, current_window = false })
+    end)
+vim.keymap.set("n", "<leader>E", "<cmd> NvimTreeClose <CR>")
 
 -- Buffer move
-vim.keymap.set("n", "<A-c>", ":BufferClose<CR>", { silent = true, noremap = true })
-vim.keymap.set("n", "<A-j>", ":BufferNext<CR>", { silent = true, noremap = true })
-vim.keymap.set("n", "<A-k>", ":BufferPrevious<CR>", { silent = true, noremap = true })
-vim.keymap.set("n", "<A-p>", ":BufferPin<CR>", { silent = true, noremap = true })
-vim.keymap.set("n", "<A-N>", ":BufferMoveNext<CR>", { silent = true, noremap = true })
-vim.keymap.set("n", "<A-P>", ":BufferMovePrevious<CR>", { silent = true, noremap = true })
+vim.keymap.set("n", "<A-c>", ":BufferClose<CR>", { silent = true })
+vim.keymap.set("n", "<A-j>", ":BufferNext<CR>", { silent = true })
+vim.keymap.set("n", "<A-k>", ":BufferPrevious<CR>", { silent = true })
+vim.keymap.set("n", "<A-p>", ":BufferPin<CR>", { silent = true })
+vim.keymap.set("n", "<A-N>", ":BufferMoveNext<CR>", { silent = true })
+vim.keymap.set("n", "<A-P>", ":BufferMovePrevious<CR>", { silent = true })
 
 -- Telescope
-
-local function get_cwd()
-    local cwd = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
-    if vim.v.shell_error ~= 0 then
-        return vim.lsp.get_active_clients()[1].config.root_dir
-    end
-
-    return cwd
+local telescope_keys = require('modules.nv-telescope').telescope_keys
+for _, value in ipairs(telescope_keys) do
+    vim.keymap.set(value.mode, value.key, value.action, value.options)
 end
-
-
-vim.keymap.set("n", '<leader>scf', "<cmd>Telescoep current_buffer_fuzzy_find<CR>", { silent = true, noremap = true })
-vim.keymap.set("n", '<leader>sbf', "<cmd>Telescope buffers<CR>", { silent = true, noremap = true })
-vim.keymap.set('n', '<leader>df', '<cmd>Telescope dap frames<cr>')
-vim.keymap.set('n', '<leader>dh', '<cmd>Telescope dap commands<cr>')
-vim.keymap.set('n', '<leader>stb', '<cmd>Telescope dap list_breakpoints<cr>')
-vim.keymap.set(
-    "n",
-    '<leader>F',
-    function() require("telescope.builtin").live_grep({ cwd = get_cwd() }) end,
-    { silent = true, noremap = true })
-
-vim.keymap.set(
-    "n",
-    '<leader>f',
-    function() require("telescope.builtin").find_files({ cwd = get_cwd(), no_ignore_parent = true }) end,
-    { silent = true, noremap = true })
 
 -- Yank to clipboard
 vim.keymap.set("n", "<leader>y", "\"*y", { silent = true })
@@ -102,7 +89,7 @@ vim.keymap.set("n", "<leader>tnm", "<Cmd>lua require('jdtls').test_nearest_metho
 vim.keymap.set("n", "<leader>tc", "<Cmd>lua require'jdtls'.test_class()<CR>")
 
 -- dapui
-vim.keymap.set("n", "<leader>dtt", "<Cmd>lua require('dapui').toggle()<CR>")
+vim.keymap.set("n", "<leader>dtt", "<Cmd>lua require('dapui').toggle({ reset = true })<CR>")
 vim.keymap.set('n', "<leader>tb", "<cmd>lua require 'dap'.toggle_breakpoint() <cr>")
 vim.keymap.set('n', "<leader>tB", "<cmd>lua require 'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: ')) <cr>")
 vim.keymap.set('n', '<leader>ctb', "<cmd>lua require'dap'.clear_breakpoints()<cr>")
