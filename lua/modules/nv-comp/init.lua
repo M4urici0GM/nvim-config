@@ -7,23 +7,42 @@ cmp.setup({
         end,
     },
     preselect = 'None',
-    completion = { completeopt = "menu,menuone,noselect" },
-    window = {
-        documentation = cmp.config.window.bordered(),
-        completion = cmp.config.window.bordered(),
+    completion = {
+        completeopt = "menu,menuone,noselect",
+        border = "rounded",
+        winhighlight = "Normal:CmpNormal",
+        documentation = {
+            winhighlight = "Normal:CmpDocNormal",
+        },
     },
     formatting = {
         expandable_indicator = true,
         fields = { 'menu', 'abbr', 'kind' },
         format = function(entry, item)
+            print(item.kind)
             local menu_icon = {
                 nvim_lsp = 'λ',
                 luasnip = '⋗',
                 buffer = 'Ω',
                 path = '🖫',
+                Variable = '󰰬',
+                Method = '󰰑',
+                Class = '󰯳',
+                Interface = '󰰅'
             }
 
-            item.menu = menu_icon[entry.source.name]
+            -- 󰰅
+
+            local icons = {
+                Variable = '󰰬',
+                Method = '󰰑',
+                Class = '󰯳',
+                Interface = '󰰅'
+            }
+
+            item.menu = icons[item.kind] or '' or (icons[item.kind] or '')
+            item.kind = item.kind
+
             return item
         end,
     },

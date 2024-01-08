@@ -16,7 +16,10 @@ local pluginConfigs = {
     'Mofiqul/dracula.nvim',
     'rebelot/kanagawa.nvim',
     { "EdenEast/nightfox.nvim" },
-    'sainnhe/sonokai',
+    -- 'sainnhe/sonokai',
+    'm4urici0gm/sonokai',
+    'norcalli/nvim-colorizer.lua',
+    'ap/vim-css-color',
 
     -- lsp
     "williamboman/mason.nvim",

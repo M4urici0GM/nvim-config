@@ -4,8 +4,7 @@ function M.setupLsp()
     local floatOptions = {
         focusable = true,
         style = "minimal",
-        border = "rounded"
-
+        border = "none"
     }
     local lspConfig = {
         float = floatOptions,

@@ -26,6 +26,7 @@ vim.opt.colorcolumn = "125"
 vim.g.barbar_auto_setup = false
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
+vim.g.sonokai_enable_italic = false
 vim.opt.foldmethod = "manual"
 
 vim.cmd('autocmd BufEnter * set formatoptions-=cro')
