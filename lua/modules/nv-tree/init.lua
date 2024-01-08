@@ -68,11 +68,11 @@ require("nvim-tree").setup({
         root_folder_modifier = ":t",
         indent_markers = {
             enable = false,
-            -- icons = {
-            --     corner = "└ ",
-            --     edge = "│ ",
-            --     none = "  ",
-            -- },
+            icons = {
+                corner = "└ ",
+                edge = "│ ",
+                none = "  ",
+            },
         },
         icons = {
             webdev_colors = true,

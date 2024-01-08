@@ -18,21 +18,7 @@ cmp.setup({
     formatting = {
         expandable_indicator = true,
         fields = { 'menu', 'abbr', 'kind' },
-        format = function(entry, item)
-            print(item.kind)
-            local menu_icon = {
-                nvim_lsp = 'λ',
-                luasnip = '⋗',
-                buffer = 'Ω',
-                path = '🖫',
-                Variable = '󰰬',
-                Method = '󰰑',
-                Class = '󰯳',
-                Interface = '󰰅'
-            }
-
-            -- 󰰅
-
+        format = function(_, item)
             local icons = {
                 Variable = '󰰬',
                 Method = '󰰑',

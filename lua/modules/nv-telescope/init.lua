@@ -47,7 +47,7 @@ telescope.setup({
         path_display = { "truncate" },
         winblend = 0,
         border = {},
-        borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+        -- borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
         color_devicons = true,
         set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
         file_previewer = require("telescope.previewers").vim_buffer_cat.new,
@@ -64,10 +64,7 @@ M.telescope_keys = {
         key = '<leader>S',
         options = { silent = true, noremap = true },
         action = function()
-            telescope_utils.search_symbols({
-                cwd = telescope_utils.get_cwd(),
-                supports_empty_query = { "jdtls" },
-            })
+            telescope_utils.search_symbols({ cwd = telescope_utils.get_cwd(), supports_empty_query = { "jdtls" } })
         end
     },
     {

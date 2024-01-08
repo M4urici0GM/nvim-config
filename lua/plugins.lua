@@ -4,6 +4,7 @@ local pluginConfigs = {
     { "folke/neodev.nvim",                    opts = {} },
     { 'gbrlsnchs/telescope-lsp-handlers.nvim' },
     'nvim-telescope/telescope-ui-select.nvim',
+    { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
     {
         'windwp/nvim-autopairs',
         event = "InsertEnter",
@@ -11,15 +12,7 @@ local pluginConfigs = {
 
     -- themes
     { "nvim-tree/nvim-web-devicons", lazy = true },
-    { "catppuccin/nvim",             name = "catppuccin", priority = 1000 },
-    { 'rose-pine/neovim',            name = 'rose-pine' },
-    'Mofiqul/dracula.nvim',
-    'rebelot/kanagawa.nvim',
-    { "EdenEast/nightfox.nvim" },
-    -- 'sainnhe/sonokai',
     'm4urici0gm/sonokai',
-    'norcalli/nvim-colorizer.lua',
-    'ap/vim-css-color',
 
     -- lsp
     "williamboman/mason.nvim",
@@ -41,9 +34,9 @@ local pluginConfigs = {
 
     -- Cmp
     "hrsh7th/nvim-cmp",
+    "hrsh7th/cmp-cmdline",
     "hrsh7th/cmp-nvim-lsp",
     "L3MON4D3/LuaSnip",
-    "hrsh7th/cmp-cmdline",
 
     -- UI
     "nvim-lualine/lualine.nvim",
