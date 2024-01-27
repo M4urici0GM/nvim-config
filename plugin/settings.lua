@@ -21,7 +21,7 @@ vim.opt.termguicolors = true
 vim.opt.scrolloff = 8 -- Keeps 8 lines above/below when scrolling
 vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
-vim.opt.updatetime = 50
+vim.opt.updatetime = 750
 vim.opt.colorcolumn = "125"
 vim.g.barbar_auto_setup = false
 vim.g.loaded_netrw = 1
@@ -33,4 +33,31 @@ vim.cmd('autocmd BufEnter * set formatoptions-=cro')
 vim.cmd('autocmd BufEnter * setlocal formatoptions-=cro')
 vim.cmd('command Z w | qa!')
 vim.cmd('cabbrev wqa Z')
+vim.cmd('let test#preserve_screen = 1')
+vim.cmd("let test#strategy = { 'nearest': 'neovim', 'file':    'dispatch','suite':   'basic', }")
+vim.cmd([[
+	function! SplitStrategy(cmd)
+		botright new | call termopen(a:cmd) |
+	endfunction
 
+	let g:test#custom_strategies = {'terminal_split': function('SplitStrategy')}
+]])
+
+vim.api.nvim_create_autocmd({ "CursorHold" }, {
+	callback = function()
+		vim.api.nvim_create_autocmd("CursorHold", {
+			callback = function()
+				local opts = {
+					focusable = false,
+					close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+					border = 'rounded',
+					source = 'always',
+					prefix = ' ',
+					scope = 'cursor',
+				}
+
+				vim.diagnostic.open_float(opts)
+			end
+		})
+	end
+})

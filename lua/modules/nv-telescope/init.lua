@@ -80,6 +80,14 @@ telescope.setup({
 M.telescope_keys = {
 	{
 		mode = 'n',
+		key = '<leader>f',
+		options = { silent = true, noremap = true },
+		action = function()
+			telescope_builtin.current_buffer_fuzzy_find({ cwd = telescope_utils.get_cwd() })
+		end
+	},
+	{
+		mode = 'n',
 		key = '<leader>S',
 		options = { silent = true, noremap = true },
 		action = function()
@@ -88,7 +96,7 @@ M.telescope_keys = {
 	},
 	{
 		mode = 'n',
-		key = '<leader>F',
+		key = '<leader>g',
 		options = { silent = true, noremap = true },
 		action = function()
 			telescope_builtin.live_grep({ cwd = telescope_utils.get_cwd() })
@@ -96,7 +104,7 @@ M.telescope_keys = {
 	},
 	{
 		mode = 'n',
-		key = '<leader>f',
+		key = '<leader>F',
 		options = { silent = true, noremap = true },
 		action = function()
 			telescope_builtin.find_files({ cwd = telescope_utils.get_cwd(), })
