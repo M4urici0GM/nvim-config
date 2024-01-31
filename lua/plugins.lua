@@ -3,14 +3,14 @@ local pluginConfigs = {
 	"nvim-tree/nvim-tree.lua",
 	'nvim-telescope/telescope-ui-select.nvim',
 	"RRethy/vim-illuminate",
-	{ "folke/neodev.nvim",                    opts = {} },
+	-- { "folke/neodev.nvim",                    opts = {} },
 	{ 'gbrlsnchs/telescope-lsp-handlers.nvim' },
 	{ "lukas-reineke/indent-blankline.nvim",  main = "ibl", opts = {} },
 	{
 		'windwp/nvim-autopairs',
 		event = "InsertEnter",
 	},
-	'vim-test/vim-test',
+	-- 'vim-test/vim-test',
 
 	-- themes
 	{ "nvim-tree/nvim-web-devicons", lazy = true },

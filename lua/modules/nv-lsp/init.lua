@@ -4,7 +4,6 @@ local mason_lspconfig = require("modules.nv-lsp.masonlspconfig")
 local servers = {
     pylsp = {},
     jdtls = { ignored = true },
-    gopls = {},
     omnisharp = {
         ignored = false,
         setup = function(omnisharp, capabilities)
@@ -26,6 +25,7 @@ local servers = {
     kotlin_language_server = { ignored = true },
     html = {},
     svelte = {},
+		clangd = {},
     cucumber_language_server = {
         ignored = false,
         setup = function(server, _)
