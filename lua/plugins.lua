@@ -3,13 +3,21 @@ local pluginConfigs = {
 	"nvim-tree/nvim-tree.lua",
 	'nvim-telescope/telescope-ui-select.nvim',
 	"RRethy/vim-illuminate",
-	-- { "folke/neodev.nvim",                    opts = {} },
 	{ 'gbrlsnchs/telescope-lsp-handlers.nvim' },
 	{ "lukas-reineke/indent-blankline.nvim",  main = "ibl", opts = {} },
 	{
 		'windwp/nvim-autopairs',
 		event = "InsertEnter",
 	},
+	{
+		"epwalsh/obsidian.nvim",
+		version = "*",
+		ft = "markdown",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		opts = {
+		}
+	},
+	-- { "folke/neodev.nvim",                    opts = {} },
 	-- 'vim-test/vim-test',
 
 	-- themes

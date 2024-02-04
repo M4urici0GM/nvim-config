@@ -1,7 +1,5 @@
 local function on_attach(bufnr)
     local api = require("nvim-tree.api")
-
-
     local function opts(module, desc)
         return {
             desc = module .. desc,
@@ -39,10 +37,6 @@ require("nvim-tree").setup({
     -- },
     disable_netrw = true,
     hijack_netrw = true,
-    filters = {
-        custom = { ".git" },
-        exclude = { ".gitignore" },
-    },
     -- auto_close = true,
     -- open_on_tab = false,
     -- hijack_cursor = false,

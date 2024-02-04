@@ -28,6 +28,7 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 vim.opt.foldmethod = "manual"
 vim.g.sonokai_enable_italic = false
+vim.opt.conceallevel=1
 
 vim.cmd('autocmd BufEnter * set formatoptions-=cro')
 vim.cmd('autocmd BufEnter * setlocal formatoptions-=cro')

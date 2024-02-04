@@ -10,7 +10,9 @@ require 'nvim-treesitter.configs'.setup({
         "query",
         "javascript",
         "typescript",
-        "rust"
+        "rust",
+				"markdown",
+				"markdown_inline",
     },
     sync_install = false,
     auto_install = true,
