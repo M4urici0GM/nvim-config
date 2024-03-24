@@ -34,6 +34,7 @@ vim.cmd('autocmd BufEnter * set formatoptions-=cro')
 vim.cmd('autocmd BufEnter * setlocal formatoptions-=cro')
 vim.cmd('command Z w | qa!')
 vim.cmd('cabbrev wqa Z')
+
 -- vim.cmd('let test#preserve_screen = 1')
 -- vim.cmd("let test#strategy = { 'nearest': 'neovim', 'file':    'dispatch','suite':   'basic', }")
 -- vim.cmd([[

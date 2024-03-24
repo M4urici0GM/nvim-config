@@ -1,5 +1,6 @@
 local cmp = require('cmp')
 local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+local lspkind = require('lspkind')
 
 cmp.setup({
 	snippet = {
@@ -16,23 +17,40 @@ cmp.setup({
 		-- documentation = {
 		--     winhighlight = "Normal:CmpDocNormal",
 		-- },
+		border = {
+			completion = false,
+			documentation = false
+		}
+	},
+	window = {
+		completion = cmp.config.window.bordered({
+			col_offset = -3,
+			side_padding = 0,
+			winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None",
+		}),
+		documentation = cmp.config.window.bordered({
+			winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None",
+		}),
 	},
 	formatting = {
-		expandable_indicator = true,
-		fields = { 'menu', 'abbr', 'kind' },
-		format = function(_, item)
-			local icons = {
-				Variable = '󰰬',
-				Method = '󰰑',
-				Class = '󰯳',
-				Interface = '󰰅'
-			}
+		fields = { "kind", "abbr", "menu" },
+		format = function(entry, vim_item)
+			local kind = lspkind.cmp_format({
+				mode = "symbol_text",
+				maxwidth = 50,
+			})(entry, vim_item)
+			local strings = vim.split(kind.kind, "%s", { trimempty = true })
+			kind.kind = " " .. strings[1] .. " "
+			kind.menu = "    (" .. strings[2] .. ")"
 
-			item.menu = icons[item.kind] or '' or (icons[item.kind] or '')
-			item.kind = item.kind
-
-			return item
+			return kind
 		end,
+	},
+	view = {
+		entries = { name = "custom", selection_order = "near_cursor" },
+	},
+	experimental = {
+		ghost_text = true,
 	},
 	mapping = cmp.mapping.preset.insert({
 		['<C-b>'] = cmp.mapping.scroll_docs(-4),
@@ -41,13 +59,12 @@ cmp.setup({
 		['<Tab>'] = cmp.mapping.select_next_item(),
 		['<S-Tab>'] = cmp.mapping.select_prev_item(),
 		['<C-e>'] = cmp.mapping.abort(),
-		['<CR>'] = cmp.mapping.confirm(),     -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+		['<CR>'] = cmp.mapping.confirm(), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
 	}),
-
 	sources = cmp.config.sources({
 		-- { name = 'nvim_lsp_signature_help' },
-		{ name = 'nvim_lsp',               group_index = 1 },
-		{ name = 'buffer',                 group_index = 2 },
+		{ name = 'nvim_lsp', group_index = 1 },
+		{ name = 'buffer',   group_index = 2 },
 		{ name = 'luasnip' }, -- For luasnip users.
 	})
 })

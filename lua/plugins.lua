@@ -1,8 +1,10 @@
 local pluginConfigs = {
 	-- Utils
 	"nvim-tree/nvim-tree.lua",
+	{ "folke/neodev.nvim",                    opts = {} },
 	'nvim-telescope/telescope-ui-select.nvim',
 	"RRethy/vim-illuminate",
+	'segeljakt/vim-silicon',
 	{ 'gbrlsnchs/telescope-lsp-handlers.nvim' },
 	{ "lukas-reineke/indent-blankline.nvim",  main = "ibl", opts = {} },
 	{
@@ -14,28 +16,23 @@ local pluginConfigs = {
 		version = "*",
 		ft = "markdown",
 		dependencies = { "nvim-lua/plenary.nvim" },
-		opts = {
-		}
+		opts = {}
 	},
-	-- { "folke/neodev.nvim",                    opts = {} },
-	-- 'vim-test/vim-test',
+	{ "j-hui/fidget.nvim",           opts = {} },
+	"onsails/lspkind.nvim",
 
 	-- themes
-	{ "nvim-tree/nvim-web-devicons", lazy = true },
 	'm4urici0gm/sonokai',
+	"rebelot/kanagawa.nvim",
+	'wuelnerdotexe/vim-enfocado',
+	"nyoom-engineering/oxocarbon.nvim",
+	{ "nvim-tree/nvim-web-devicons", lazy = true },
 	{
 		"catppuccin/nvim",
 		name = "catppuccin",
 		opts = {
 			term_colors = true,
 			transparent_background = false,
-			color_overrides = {
-				mocha = {
-					base = "#000000",
-					mantle = "#000000",
-					crust = "#000000",
-				},
-			},
 			integrations = {
 				telescope = {
 					enabled = true,
@@ -48,14 +45,26 @@ local pluginConfigs = {
 			},
 		},
 	},
+	{
+		"nvim-neotest/neotest",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"antoinemadec/FixCursorHold.nvim",
+			"nvim-treesitter/nvim-treesitter",
+			"nvim-neotest/neotest-jest",
+			"rcasia/neotest-java",
+			"folke/neodev.nvim"
+		}
+	},
+
 
 	-- lsp
 	"williamboman/mason.nvim",
 	"williamboman/mason-lspconfig.nvim",
 	"neovim/nvim-lspconfig",
 	"mfussenegger/nvim-jdtls",
-	{ "folke/trouble.nvim",          dependencies = { "nvim-tree/nvim-web-devicons" } },
-	{ 'numToStr/Comment.nvim',       opts = {},                                       lazy = false, },
+	{ "folke/trouble.nvim",    dependencies = { "nvim-tree/nvim-web-devicons" } },
+	{ 'numToStr/Comment.nvim', opts = {},                                       lazy = false, },
 	"mfussenegger/nvim-dap",
 	'rcarriga/nvim-dap-ui',
 	"simrat39/rust-tools.nvim",

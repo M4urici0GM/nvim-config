@@ -1,6 +1,8 @@
 local lsp_config = require("modules.nv-lsp.lspconfig")
 local mason_lspconfig = require("modules.nv-lsp.masonlspconfig")
 
+require("neodev").setup({ })
+
 local servers = {
     pylsp = {},
     jdtls = { ignored = true },
@@ -22,7 +24,14 @@ local servers = {
     lua_ls = {},
     rust_analyzer = {},
     tsserver = {},
-    kotlin_language_server = { ignored = true },
+    kotlin_language_server = {
+			setup = function(server, capabilities)
+				server.setup({
+					cwd = require("jdtls.setup").find_root { ".git", "mvnw", "gradlew", "pom.xml", "build.gradle" },
+					capabilities = capabilities,
+				})
+			end
+		},
     html = {},
     svelte = {},
 		clangd = {},

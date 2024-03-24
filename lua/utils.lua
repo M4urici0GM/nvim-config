@@ -119,4 +119,8 @@ function M.setupClipboard()
     end
 end
 
+function M.isTreeOpen()
+  local api = require("nvim-tree.api")
+end
+
 return M
