@@ -3,6 +3,9 @@ local nvim_tree_api = require("nvim-tree.api")
 local nvim_tree_view = require("nvim-tree.view")
 local dap_virtual_text = require("nvim-dap-virtual-text")
 
+
+require('netcoredbg-macOS-arm64').setup(dap)
+
 dap.listeners.after.event_initialized["dapui_config"] = function()
     dapui.open({ reset = true })
     if nvim_tree_view.is_visible() then
