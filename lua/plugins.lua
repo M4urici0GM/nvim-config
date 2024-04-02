@@ -18,10 +18,12 @@ local pluginConfigs = {
 		dependencies = { "nvim-lua/plenary.nvim" },
 		opts = {}
 	},
-	{ "j-hui/fidget.nvim",           opts = {} },
+	{ "j-hui/fidget.nvim",         opts = {} },
 	"onsails/lspkind.nvim",
+	'Hoffs/omnisharp-extended-lsp.nvim',
 
 	-- themes
+	{ "bluz71/vim-moonfly-colors", name = "moonfly", lazy = false, priority = 1000 },
 	'm4urici0gm/sonokai',
 	"rebelot/kanagawa.nvim",
 	'wuelnerdotexe/vim-enfocado',
@@ -63,8 +65,8 @@ local pluginConfigs = {
 	"williamboman/mason-lspconfig.nvim",
 	"neovim/nvim-lspconfig",
 	"mfussenegger/nvim-jdtls",
-	{ "folke/trouble.nvim",    dependencies = { "nvim-tree/nvim-web-devicons" } },
-	{ 'numToStr/Comment.nvim', opts = {},                                       lazy = false, },
+	{ "folke/trouble.nvim",          dependencies = { "nvim-tree/nvim-web-devicons" } },
+	{ 'numToStr/Comment.nvim',       opts = {},                                       lazy = false, },
 	"mfussenegger/nvim-dap",
 	"m4urici0gm/dap-cs",
 	'rcarriga/nvim-dap-ui',

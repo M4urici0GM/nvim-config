@@ -101,6 +101,14 @@ telescope.setup({
 M.telescope_keys = {
 	{
 		mode = 'n',
+		key = '<leader>s',
+		options = { silent = true, noremap = true },
+		action = function()
+			telescope_builtin.git_files({ cwd = telescope_utils.get_cwd() })
+		end
+	},
+	{
+		mode = 'n',
 		key = '<leader>F',
 		options = { silent = true, noremap = true },
 		action = function()
