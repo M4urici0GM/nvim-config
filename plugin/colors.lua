@@ -1,4 +1,4 @@
-vim.cmd("colorscheme moonfly")
+vim.cmd("colorscheme catppuccin-mocha")
 
 vim.api.nvim_set_hl(0, 'DapBreakpoint', { ctermbg = 'red', bg = '#3A2323', blend = 1, })
 vim.api.nvim_set_hl(0, 'DapBreakpointSymbol', { fg = "#cc6460", bg = '#3A2323', blend = 1, })
