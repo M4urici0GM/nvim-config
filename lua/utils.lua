@@ -18,11 +18,9 @@ function M.evaluateCommand(command, errorMsg)
     end
 end
 
-local lazy_repository = "https://github.com/folke/lazy.nvim.git"
 local java_debug_repository = "https://github.com/microsoft/java-debug.git"
 local vscode_java_test_repository = 'https://github.com/microsoft/vscode-java-test.git'
-local plugin_file =
-'/mourice.nvim/java.debug/tmp/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar'
+local plugin_file = '/mourice.nvim/java.debug/tmp/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar'
 
 function M.closeAllPopups()
     for _, win in pairs(vim.api.nvim_list_wins()) do
@@ -91,36 +89,6 @@ function M.setupEnvironment()
         print("cleaning up..")
         vim.fn.system(string.format('rm -rf %s', temp_folder))
     end
-end
-
-function M.setupLazy()
-    local lazypath = M.formatPath("/lazy/lazy.nvim")
-    if not M.folderExists(lazypath) then
-        vim.fn.system({ "git", "clone", "--filter=blob:none", lazy_repository, "--branch=stable", lazypath })
-    end
-
-    vim.opt.rtp:prepend(lazypath)
-end
-
-function M.getOs()
-    -- Determine OS
-    local os_config = "linux"
-    if vim.fn.has "mac" == 1 then
-        os_config = "mac"
-    end
-    return os_config
-end
-
-function M.setupClipboard()
-    if vim.fn.has "mac" == 1 then
-        vim.cmd('set clipboard=unnamed "OSX')
-    else
-        vim.cmd('set clipboard=unnamedplus "Linux')
-    end
-end
-
-function M.isTreeOpen()
-  local api = require("nvim-tree.api")
 end
 
 return M

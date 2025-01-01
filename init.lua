@@ -1,9 +1,9 @@
 vim.g.mapleader = " "
 
-local utils = require("utils")
-utils.setupLazy()
-utils.setupClipboard()
-utils.setupEnvironment()
+local utils = require('utils')
 
-require("plugins")
-require("modules")
+require('config.settings')
+require('config.keymap')
+require('config.lazy')
+
+utils.setupEnvironment()
